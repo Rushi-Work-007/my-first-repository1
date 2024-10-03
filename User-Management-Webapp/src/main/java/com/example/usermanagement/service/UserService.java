@@ -109,7 +109,7 @@ public class UserService {
 		}
 	}
 		// Delete user by ID with existence check
-		public void deleteById2(Long userId) {
+		public void deleteById3(Long userId) {
 			logger.info("Attempting to delete user by ID: {}", userId);
 			if (userRepository.existsById(userId)) {
 				userRepository.deleteById(userId);
