@@ -88,16 +88,6 @@ public class UserService {
 	}
 
 	// Delete user by ID with existence check
-	public void deleteById(Long userId) {
-		logger.info("Attempting to delete user by ID: {}", userId);
-		if (userRepository.existsById(userId)) {
-			userRepository.deleteById(userId);
-			logger.info("User with ID {} deleted successfully.", userId);
-		} else {
-			logger.error("User with ID {} does not exist, cannot delete.", userId);
-			throw new RuntimeException("User with ID " + userId + " does not exist.");
-		}
-	}// Delete user by ID with existence check
 	public void deleteById1(Long userId) {
 		logger.info("Attempting to delete user by ID: {}", userId);
 		if (userRepository.existsById(userId)) {
@@ -109,4 +99,3 @@ public class UserService {
 		}
 	}
 }
-
