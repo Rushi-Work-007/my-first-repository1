@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>ユーザー編集</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1>ユーザー編集</h1>
+        <form th:action="@{/users/update}" th:object="${user}" method="post">
+            <input type="hidden" th:field="*{id}"/>
+            <div class="form-group">
+                <label for="firstName">名前（名）</label>
+                <input type="text" id="firstName" th:field="*{firstName}" class="form-control"/>
+            </div>
+            <div class="form-group">
+                <label for="lastName">名前（姓）</label>
+                <input type="text" id="lastName" th:field="*{lastName}" class="form-control"/>
+            </div>
+            <div class="form-group">
+                <label for="email">メールアドレス</label>
+                <input type="email" id="email" th:field="*{email}" class="form-control"/>
+            </div>
+            <div class="form-group">
+                <label for="contactNumber">連絡先電話番号</label>
+                <input type="text" id="contactNumber" th:field="*{contactNumber}" class="form-control"/>
+            </div>
+            <div class="form-group">
+                <label for="address">住所</label>
+                <input type="text" id="address" th:field="*{address}" class="form-control"/>
+            </div>
+            <div class="form-group">
+                <label for="companyName">会社名</label>
+                <input type="text" id="companyName" th:field="*{companyName}" class="form-control"/>
+            </div>
+            <button type="submit" class="btn btn-primary">確認</button>
+            <a href="/users" class="btn btn-secondary">戻る</a>
+        </form>
+    </div>
+</body>
+</html>

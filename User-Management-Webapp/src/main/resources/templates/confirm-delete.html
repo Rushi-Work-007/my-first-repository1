@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>削除確認</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1 class="my-4">ユーザー削除の確認</h1>
+        <form action="/users/delete" method="post">
+            <input type="hidden" name="userId" th:value="${user.id}" />
+            
+            <div class="alert alert-warning">
+                <h4 class="alert-heading">本当にこのユーザーを削除してもよろしいですか？</h4>
+                <p th:text="'ユーザー: ' + ${user.firstName} + ' ' + ${user.lastName} + ' (ID: ' + ${user.id} + ')'"></p>
+                <ul>
+                    <li th:text="'メール: ' + ${user.email}"></li>
+                    <li th:text="'連絡先: ' + ${user.contactNumber}"></li>
+                    <li th:text="'住所: ' + ${user.address}"></li>
+                    <li th:text="'会社名: ' + ${user.companyName}"></li>
+                </ul>
+                <p class="mb-0">この操作は元に戻せません。</p>
+            </div>
+            
+            <button type="submit" class="btn btn-danger">ユーザーを削除</button>
+            <a href="/users" class="btn btn-secondary">キャンセル</a>
+        </form>
+    </div>
+</body>
+</html>

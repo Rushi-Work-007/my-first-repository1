@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>ユーザー詳細</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1>ユーザー詳細</h1>
+        <div th:if="${users != null}">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>ID番号</th>
+                        <th>名前（名）</th>
+                        <th>名前（姓）</th>
+                        <th>メールアドレス</th>
+                        <th>連絡先電話番号</th>
+                        <th>住所</th>
+                        <th>会社名</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="user : ${users}">
+                        <td th:text="${user.id}"></td>
+                        <td th:text="${user.firstName}"></td>
+                        <td th:text="${user.lastName}"></td>
+                        <td th:text="${user.email}"></td>
+                        <td th:text="${user.contactNumber}"></td>
+                        <td th:text="${user.address}"></td>
+                        <td th:text="${user.companyName}"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <a href="/users" class="btn btn-secondary">戻る</a>
+    </div>
+</body>
+</html>

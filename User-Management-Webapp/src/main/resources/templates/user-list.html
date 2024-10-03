@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>ユーザー一覧</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const checkboxes = document.querySelectorAll('input[name="selectedUser"]');
+            const deleteButton = document.getElementById('deleteButton');
+            const updateButton = document.getElementById('updateButton');
+            const showButton = document.getElementById('showButton');
+            const selectedUserIdsField = document.getElementById('selectedUserIds');
+            
+            function updateSelection() {
+                const selectedIds = Array.from(checkboxes)
+                    .filter(cb => cb.checked)
+                    .map(cb => cb.value);
+                selectedUserIdsField.value = selectedIds.join(',');
+                const isDisabled = selectedIds.length === 0;
+
+                deleteButton.disabled = isDisabled;
+                updateButton.disabled = isDisabled;
+                showButton.disabled = isDisabled;
+            }
+
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', updateSelection);
+            });
+
+            updateSelection();
+        });
+
+        function submitDeleteForm() {
+            const selectedUserIds = document.getElementById('selectedUserIds').value;
+            if (selectedUserIds) {
+                window.location.href = `/users/confirm-delete?userId=${encodeURIComponent(selectedUserIds)}`;
+            } else {
+                alert('削除するユーザーが選択されていません。');
+            }
+        }
+
+        function submitUpdateForm() {
+            const selectedUserIds = document.getElementById('selectedUserIds').value;
+            if (selectedUserIds) {
+                window.location.href = `/users/edit/${selectedUserIds}`;
+            } else {
+                alert('更新するユーザーが選択されていません。');
+            }
+        }
+
+        function submitShowForm() {
+            const selectedUserIds = document.getElementById('selectedUserIds').value;
+            if (selectedUserIds) {
+                window.location.href = `/users/show?userIds=${encodeURIComponent(selectedUserIds)}`;
+            } else {
+                alert('表示するユーザーが選択されていません。');
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>ユーザー一覧</h1>
+        <form method="get" action="/users">
+            <input type="text" name="lastName" value="姓でフィルター" placeholder="姓でフィルター" class="form-control">
+            <button type="submit" class="btn btn-primary mt-2">フィルター</button>
+        </form>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID番号</th>
+                    <th>名前</th>
+                    <th>連絡先情報</th>
+                    <th>選択</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="user : ${users}">
+                    <td th:text="${user.id}"></td>
+                    <td th:text="${user.firstName} + ' ' + ${user.lastName}"></td>
+                    <td th:text="${user.contactNumber}"></td>
+                    <td><input type="checkbox" name="selectedUser" th:value="${user.id}"></td>
+                </tr>
+            </tbody>
+        </table>
+        <a href="/users/register" class="btn btn-success">登録</a>
+        <button type="button" id="updateButton" class="btn btn-warning" onclick="submitUpdateForm()">編集</button>
+        <button type="button" id="deleteButton" class="btn btn-danger" onclick="submitDeleteForm()">削除</button>
+        <button type="button" id="showButton" class="btn btn-info" onclick="submitShowForm()">表示</button>
+        <!-- Hidden form to hold selected user IDs (not needed anymore) -->
+        <input type="hidden" id="selectedUserIds" name="selectedUserIds">
+    </div>
+</body>
+</html>
